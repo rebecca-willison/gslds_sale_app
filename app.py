@@ -60,15 +60,15 @@ if uploaded_file is not None:
             dat = df[df['customer'] == c]
             orders = dat['order_id'].unique().tolist()
             n_orders = len(orders)
+            st.header(c)
             for o in range(n_orders):
-                paid = dat['payment_method'].unique().tolist()[0]
-                ship = dat['shipping_method'].unique().tolist()[0]
-                st.header(c)
-                st.subheader(paid + ', ' + ship)
                 d = dat[dat['order_id'] == orders[o]]
+                paid = d['payment_method'].unique().tolist()[0]
+                ship = d['shipping_method'].unique().tolist()[0]
+                st.subheader(paid + ', ' + ship)
                 d.index = np.arange(1, d.shape[0]+1).tolist()
                 if n_orders > 1:
-                    st.subheader(orders[o])
+                    st.write('Order #: ' + str(orders[o]))
                 st.table(d[['product', 'quantity']])
             st.write('- ' * 20)
 
